@@ -1,3 +1,4 @@
+/*/
 const http = require('http');
 
 const servidor = http.createServer((req, res) => {
@@ -19,3 +20,5 @@ if (req.method === 'GET' && req.url === '/') {
 servidor.listen(3000, () => {
 console.log('Escuchando en http://localhost:3000');
 });
+/*/
+
