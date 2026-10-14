@@ -1,12 +1,12 @@
 ## P0. 
 
-*Cliente:* es el navegador que usamos en nuestro computador o celular, porque es quien solicita la página.
+Cliente: es el navegador que usamos en nuestro computador o celular, porque es quien solicita la página.
 
-*Servidor:* es el equipo donde está guardada la página web y que responde a la solicitud.
+Servidor: es el equipo donde está guardada la página web y que responde a la solicitud.
 
-*Entrada:* viaja la solicitud que hacemos, por ejemplo, la dirección de la página que queremos abrir.
+Entrada: viaja la solicitud que hacemos, por ejemplo, la dirección de la página que queremos abrir.
 
-*Salida:* viaja la respuesta del servidor, como el código HTML, CSS, JavaScript, imágenes y demás elementos necesarios para mostrar la página.
+Salida: viaja la respuesta del servidor, como el código HTML, CSS, JavaScript, imágenes y demás elementos necesarios para mostrar la página.
 
 ## P1. 
 
@@ -96,3 +96,12 @@ Mi predicción: Predigo que enviara inmediatamente un error 404 ya que etsa just
 Lo que pasó: Al probarlo, el navegador me devolvió de inmediato un JSON con el error: {"mensaje": "No existe la ruta GET /actividades"} y nunca me mostró la lista de actividades.
 
 Por qué pasó: Porque Express lee el código de arriba a abajo como una fila. Como coloqué el bloque del 404 al principio y no tiene la función next(), actuó como un muro sin salida que atrapó la petición, respondió de golpe y cortó el camino, haciendo que mis rutas reales de /actividades y /actividades/:id quedaran ocultas y jamás fueran alcanzadas.
+
+
+## P12 
+
+Predicción: /actividades/gratis funcionará aunque esté debajo de /actividades/:id.
+
+Resultado: La ruta dinámica puede interpretar gratis como un ID y devolver 404.
+
+Explicación: La ruta específica debe declararse antes de la ruta dinámica.
