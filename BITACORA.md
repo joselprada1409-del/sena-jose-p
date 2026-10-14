@@ -47,3 +47,52 @@ Pasó porque solamente creamos la ruta `/` y no creamos ninguna ruta llamada `/n
 ## Reflexión
 
 De las tres cosas que me parecieron tediosas en el Momento 1, Express me ayudó a resolverlas casi todas. Ya no tengo que hacer tantos `if` y `else` para revisar las rutas, tampoco tengo que convertir el JSON manualmente y el manejo del 404 es más sencillo. Lo que sigue igual es que tengo que crear las rutas correctamente y decidir qué debe responder cada una.
+
+### P6
+
+Mi predicción: Creo que voy a recibir el código 200 y los datos de la actividad con id 1.
+Lo que pasó: Al principio la búsqueda no encontraba la actividad porque el id llegaba como texto y en el arreglo está guardado como número.
+Por qué pasó:`req.params.id` recibe el valor como texto. Por eso tuve que convertirlo con `Number()` para compararlo correctamente.
+
+## P7
+
+Mi predicción:Si quito el `return` y pido `/actividades/99`, creo que va a aparecer un error porque esa actividad no existe.
+Lo que pasó: La ruta envía la respuesta 404, pero como no tiene `return`, la función sigue ejecutándose y trata de enviar otra respuesta. En la terminal aparece un error relacionado con el envío de encabezados después de enviar la respuesta.
+Por qué pasó: `return` detiene la ejecución de la función después de enviar la respuesta de error y evita que intente responder dos veces.
+
+## P8
+
+Mi predicción:
+  * `?tipo=agua`: recibo el código 200 y una lista con las dos actividades acuáticas.
+  * `?tipo=AGUA`: con el código original, recibo el código 200 y una lista vacía porque las mayúsculas no coinciden con `agua`.
+  * `?tipo=fuego`: recibo el código 200 y una lista vacía porque no hay actividades de ese tipo.
+
+Lo que pasó:Al convertir el tipo recibido a minúsculas, tanto `agua` como `AGUA` permiten encontrar las dos actividades acuáticas. Con `fuego`, la lista sigue vacía.
+
+Por qué pasó: La comparación distingue entre mayúsculas y minúsculas si no normalizamos el texto. El código 200 es correcto para `fuego` porque la petición se procesó correctamente, aunque no haya resultados. Un 404 se usaría cuando no se encuentra una ruta o un recurso específico.
+
+## P9
+
+Mi predicción: Creo que me va a salir el código 201, que significa que se creó algo nuevo. Pero pienso que puede haber un problema con los datos, porque todavía no he configurado Express para recibir el JSON. En la terminal creo que va a aparecer `Body recibido: undefined`.
+
+Lo que pasó: Al enviar los datos desde Thunder Client, la aplicación no pudo recibirlos correctamente porque faltaba una configuración.
+
+Por qué pasó: Porque tenía que agregar `app.use(express.json())` antes de las rutas para que Express pudiera leer los datos que envío.
+
+
+## P10
+
+Mi predicción: Creo que, si hago un cambio en app.js, guardo el archivo y vuelvo a consultar las actividades, la actividad que creé ya no aparecerá si el servidor se reinició.
+
+Lo que pasó: Al reiniciar el servidor, la actividad que había creado desapareció de la lista.
+
+Por qué pasó: Porque las actividades están guardadas en un arreglo en memoria y no en una base de datos. Cuando el servidor se reinicia, los datos nuevos se pierden.
+
+
+## P11
+
+Mi predicción: Predigo que enviara inmediatamente un error 404 ya que etsa justo al comienzo y como el codigo se lee line por linea vera eso y dira inmediatamente que no hay mas codigo abajo y dejara de leer el codigo 
+
+Lo que pasó: Al probarlo, el navegador me devolvió de inmediato un JSON con el error: {"mensaje": "No existe la ruta GET /actividades"} y nunca me mostró la lista de actividades.
+
+Por qué pasó: Porque Express lee el código de arriba a abajo como una fila. Como coloqué el bloque del 404 al principio y no tiene la función next(), actuó como un muro sin salida que atrapó la petición, respondió de golpe y cortó el camino, haciendo que mis rutas reales de /actividades y /actividades/:id quedaran ocultas y jamás fueran alcanzadas.

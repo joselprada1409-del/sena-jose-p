@@ -1,0 +1,19 @@
+{
+  "name": "github_j_prada",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Jose Luis Prada",
+  "main": "index.js",
+  "scripts": {
+"dev": "node --watch app.js",
+"start": "node app.js"
+  },
+  "keywords": [],
+  "dependencies": {
+    "express": "^5.2.1"
+    
+  }
+
+}
+
